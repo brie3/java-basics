@@ -1,4 +1,4 @@
-package hws.hw2;
+package hws.syntax.hw2;
 
 import packages.bubble.bubble;
 import packages.query.query;

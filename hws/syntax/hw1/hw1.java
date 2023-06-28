@@ -1,4 +1,4 @@
-package hws.hw1;
+package hws.syntax.hw1;
 
 import packages.calculator.calculator;
 import packages.factorial.factorial;

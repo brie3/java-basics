@@ -1,4 +1,4 @@
-package hws.hw6;
+package hws.syntax.hw6;
 
 import packages.notebook.util;
 import packages.filter.filter;

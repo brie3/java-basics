@@ -1,4 +1,4 @@
-package hws.hw3;
+package hws.syntax.hw3;
 
 import packages.list.list;
 

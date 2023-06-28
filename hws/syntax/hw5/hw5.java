@@ -1,4 +1,4 @@
-package hws.hw5;
+package hws.syntax.hw5;
 
 import packages.input.reader;
 import packages.input.type;

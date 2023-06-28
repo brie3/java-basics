@@ -1,4 +1,4 @@
-package hws.hw4;
+package hws.syntax.hw4;
 
 import java.util.*;
 
