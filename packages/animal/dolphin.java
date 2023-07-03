@@ -1,17 +1,21 @@
 package packages.animal;
 
 public class dolphin extends animal {
-    public dolphin(String name, Integer age, String vaccination, String color, String species, owner owner) {
-        super(name, age, vaccination, color, species, owner, 0);
+    public dolphin(String name, Integer age, String vaccination, owner owner) {
+        super(name, age, vaccination, color.Blue, species.Mammal, owner, 0, 0, 30, 0, sound.Dolphin);
     }
 
     @Override
-    public String toGo() {
-        return String.format("%s: '%s' doesn't have legs", getClass().getSimpleName(), _name);
+    public int run() {
+        // System.out.printf("%s: '%s' doesn't have legs\n", getClass().getSimpleName(),
+        // _name);
+        return _runSpeed;
     }
 
     @Override
-    public String fly() {
-        return String.format("%s: '%s' doesn't have wings", getClass().getSimpleName(), _name);
+    public int fly() {
+        // System.out.printf("%s: '%s' doesn't have wings\n",
+        // getClass().getSimpleName(), _name);
+        return _flySpeed;
     }
 }

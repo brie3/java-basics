@@ -1,16 +1,21 @@
 package packages.animal;
 
-public class animal {
+public class animal implements soundable, runnable, flyable, swimmable {
     String _name;
     Integer _age;
     String _vaccination;
-    String _color;
-    String _species;
+    color _color;
+    species _species;
     owner _owner;
     Integer _legsCount;
+    Integer _runSpeed = 0;
+    Integer _swimSpeed = 0;
+    Integer _flySpeed = 0;
+    sound _sound = sound.Unknown;
 
-    public animal(String name, Integer age, String vaccination, String color,
-            String species, owner owner, Integer legsCount) {
+    public animal(String name, Integer age, String vaccination, color color,
+            species species, owner owner, Integer legsCount, Integer runSpeed, Integer swimSpeed, Integer flySpeed,
+            sound sound) {
         _name = name;
         _age = age;
         _vaccination = vaccination;
@@ -18,10 +23,14 @@ public class animal {
         _species = species;
         _owner = owner;
         _legsCount = legsCount;
+        _runSpeed = runSpeed;
+        _swimSpeed = swimSpeed;
+        _flySpeed = flySpeed;
+        _sound = sound;
     }
 
-    public animal(String color, String species, Integer legsCount) {
-        this(null, null, null, color, species, null, legsCount);
+    public animal(color color, species species, Integer legsCount) {
+        this(null, null, null, color, species, null, legsCount, 0, 0, 0, sound.Unknown);
     }
 
     public Integer getAge() {
@@ -37,15 +46,27 @@ public class animal {
         return String.format("%s: {name = %s, owner = %s}", getClass().getSimpleName(), _name, _owner);
     }
 
-    public String toGo() {
-        return String.format("%s: '%s' is going", getClass().getSimpleName(), _name);
+    public int run() {
+        // System.out.printf("%s: '%s' is running with speed: %d\n",
+        // getClass().getSimpleName(), _name, _runSpeed);
+        return _runSpeed;
     }
 
-    public String fly() {
-        return String.format("%s: '%s' is flying", getClass().getSimpleName(), _name);
+    public int fly() {
+        // System.out.printf("%s: '%s' is flying with speed: %d\n",
+        // getClass().getSimpleName(), _name, _flySpeed);
+        return _flySpeed;
     }
 
-    public String sweem() {
-        return String.format("%s: '%s' is sweeming", getClass().getSimpleName(), _name);
+    public int swim() {
+        // System.out.printf("%s: '%s' is swimming with speed: %d\n",
+        // getClass().getSimpleName(), _name, _swimSpeed);
+        return _swimSpeed;
+    }
+
+    public sound sound() {
+        // System.out.printf("%s: '%s' is sounding like: %s\n",
+        // getClass().getSimpleName(), _name, _sound);
+        return _sound;
     }
 }
