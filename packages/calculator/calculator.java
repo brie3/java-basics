@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 enum TokenType {
-    Unknown, Integer, Double,
+    Unknown, Integer, Double, Complex
 }
 
 public class calculator {
@@ -50,7 +50,8 @@ public class calculator {
 
     private Expr parseUnary() throws Exception {
         var op = this.text();
-        if (op == "+" || op == "-") {
+        if (op.equals("+") || op.equals("-")) {
+            next();
             return new unary(op, parseUnary());
         }
         return parsePrimary();
@@ -65,6 +66,8 @@ public class calculator {
                 return new literal((double) Integer.parseInt(text));
             case Double:
                 return new literal(Double.parseDouble(text));
+            case Complex:
+                return new literal(new complex(text));
             default:
                 throw new Exception("unexpected token type: " + text);
         }
@@ -87,22 +90,28 @@ public class calculator {
         TokenType token();
     }
 
-    private tokener[] tokens = new tokener[] {
-            new tokener() {
-                public TokenType token() {
-                    if (scanner.hasNextInt()) {
-                        return TokenType.Integer;
-                    }
-                    return TokenType.Unknown;
-                }
-            }, new tokener() {
-                public TokenType token() {
-                    if (scanner.hasNextDouble()) {
-                        return TokenType.Double;
-                    }
-                    return TokenType.Unknown;
-                }
+    private tokener[] tokens = new tokener[] { new tokener() {
+        public TokenType token() {
+            if (scanner.hasNextInt()) {
+                return TokenType.Integer;
             }
+            return TokenType.Unknown;
+        }
+    }, new tokener() {
+        public TokenType token() {
+            if (scanner.hasNextDouble()) {
+                return TokenType.Double;
+            }
+            return TokenType.Unknown;
+        }
+    }, new tokener() {
+        public TokenType token() {
+            if (scanner.hasNext("((\\d+)|(\\d+\\.\\d+))(([\\+|\\-]\\d+)|([\\+|\\-]\\d+\\.\\d+))i")) {
+                return TokenType.Complex;
+            }
+            return TokenType.Unknown;
+        }
+    }
     };
 
     private void next() {

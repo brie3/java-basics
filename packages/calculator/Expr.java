@@ -1,9 +1,7 @@
 package packages.calculator;
 
 public interface Expr {
-    double Eval();
+    complex Eval();
 
     ExprType Type();
-
-    String String();
 }

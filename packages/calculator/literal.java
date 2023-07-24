@@ -1,21 +1,21 @@
 package packages.calculator;
 
 public class literal implements Expr {
-    private double l;
+    private complex l;
 
     public literal(double in) {
-        this.l = in;
+        l = new complex(in, 0);
     }
 
-    public double Eval() {
-        return this.l;
+    public literal(complex c) {
+        l = c;
+    }
+
+    public complex Eval() {
+        return l;
     }
 
     public ExprType Type() {
         return ExprType.Literal;
-    }
-
-    public String String() {
-        return Double.toString(this.l);
     }
 }

@@ -10,19 +10,19 @@ public class binary implements Expr {
         this.y = y;
     }
 
-    public double Eval() {
+    public complex Eval() {
         switch (this.op) {
             case "+":
-                return this.x.Eval() + this.y.Eval();
+                return this.x.Eval().add(this.y.Eval());
             case "-":
-                return this.x.Eval() - this.y.Eval();
+                return this.x.Eval().sub(this.y.Eval());
             case "*":
-                return this.x.Eval() * this.y.Eval();
+                return this.x.Eval().mul(this.y.Eval());
             case "/":
-                return this.x.Eval() / this.y.Eval();
+                return this.x.Eval().div(this.y.Eval());
             default:
                 System.out.println("unexpected binary op: " + this.op);
-                return 0;
+                return new complex();
         }
     }
 
@@ -30,7 +30,8 @@ public class binary implements Expr {
         return ExprType.Binary;
     }
 
-    public String String() {
-        return this.x.String() + this.op + this.y.String();
+    @Override
+    public String toString() {
+        return this.x.toString() + this.op + this.y.toString();
     }
 }

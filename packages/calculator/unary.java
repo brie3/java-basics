@@ -9,15 +9,22 @@ public class unary implements Expr {
         this.x = ex;
     }
 
-    public double Eval() {
+    public complex Eval() {
+        var real = x.Eval().getReal();
         switch (this.op) {
             case "+":
-                return +this.x.Eval();
+                if (real < 0) {
+                    x.Eval().setReal(-real);
+                }
+                return x.Eval();
             case "-":
-                return -this.x.Eval();
+                if (real > 0) {
+                    x.Eval().setReal(-real);
+                }
+                return x.Eval();
             default:
                 System.out.println("unexpected unary op: " + this.op);
-                return 0;
+                return new complex();
         }
     }
 
@@ -25,7 +32,8 @@ public class unary implements Expr {
         return ExprType.Unary;
     }
 
-    public String String() {
-        return this.op + this.x.String();
+    @Override
+    public String toString() {
+        return this.op + this.x.toString();
     }
 }
