@@ -5,6 +5,7 @@ import java.util.regex.*;
 
 public class reader {
     Pattern word = Pattern.compile("^[a-zA-Z]*$");
+    Pattern floatReg = Pattern.compile("^([+-]?\\d+\\.\\d+)$");
     Pattern digit = Pattern.compile("\\d+");
     Console inputReader = null;
 
@@ -23,6 +24,11 @@ public class reader {
             case Str:
                 if (!word.matcher(input).matches()) {
                     return new line(type.Err, "input must be of type string");
+                }
+                return new line(type.Str, input);
+            case Float:
+                if (!floatReg.matcher(input).matches()) {
+                    return new line(type.Err, "input must be of type float");
                 }
                 return new line(type.Str, input);
             default:
