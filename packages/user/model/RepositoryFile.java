@@ -2,6 +2,9 @@ package packages.user.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.time.format.*;
+import java.time.LocalDate;
 
 public class RepositoryFile implements Repository {
     private UserMapper mapper;
@@ -53,12 +56,22 @@ public class RepositoryFile implements Repository {
 
     @Override
     public void UpdateUser(User user, Fields field, String param) {
-        if (field == Fields.FIO) {
-            user.setLastName(param);
-        } else if (field == Fields.NAME) {
-            user.setFirstName(param);
-        } else if (field == Fields.TELEPHONE) {
-            user.setPhone(param);
+        switch (field) {
+            case SURNAME:
+                user.setLastName(param);
+                break;
+            case NAME:
+                user.setLastName(param);
+                break;
+            case TELEPHONE:
+                user.setPhone(param);
+                break;
+            case DOB:
+                user.setDOB(LocalDate.parse(param, DateTimeFormatter.ofPattern("dd.MM.yyyy").withLocale(Locale.US)));
+                break;
+            case SEX:
+                user.setSex(Sex.fromString(param));
+                break;
         }
         saveUser(user);
     }

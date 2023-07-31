@@ -1,11 +1,15 @@
 package packages.user.views;
 
+import java.time.LocalDate;
 import java.util.Scanner;
+import java.time.format.*;
 
 import packages.user.controllers.UserController;
 import packages.user.model.Fields;
 import packages.user.model.User;
+import packages.user.model.Sex;
 import packages.user.utils.PhoneException;
+import packages.user.utils.SexException;
 import packages.user.utils.Validate;
 
 public class ViewUser {
@@ -66,7 +70,7 @@ public class ViewUser {
 
     private void update() throws Exception {
         String userid = prompt("Идентификатор пользователя: ");
-        String field_name = prompt("Какое поле (FIO,NAME,TELEPHONE): ");
+        String field_name = prompt("Какое поле (SURNAME,NAME,TELEPHONE): ");
         String param = null;
         if (Fields.valueOf(field_name) == Fields.TELEPHONE) {
             param = catchTelephone(param);
@@ -96,6 +100,38 @@ public class ViewUser {
         }
     }
 
+    public LocalDate catchDOB() throws Exception {
+        while (true) {
+            try {
+                var dob = prompt("Введите дату рождения <dd.mm.yyyy> (Отказ введите 0): ");
+                if (dob.equals("0")) {
+                    System.out.println("Вы отказались от ввода для изменения пользователя");
+                    return null;
+                }
+                var parsedDOB = validate.checkDob(dob);
+                return parsedDOB;
+            } catch (DateTimeParseException ex) {
+                System.out.println("Произошла ошибка " + ex.toString());
+            }
+        }
+    }
+
+    public Sex catchSex() throws Exception {
+        while (true) {
+            try {
+                var sex = prompt("Введите пол: 'm' или 'f' (Отказ введите 0): ");
+                if (sex.equals("0")) {
+                    System.out.println("Вы отказались от ввода для изменения пользователя");
+                    return null;
+                }
+                var parsedSex = validate.checkSex(sex);
+                return parsedSex;
+            } catch (SexException ex) {
+                System.out.println("Произошла ошибка " + ex.toString());
+            }
+        }
+    }
+
     private void list() throws Exception {
         for (User user : userController.getUsers()) {
             System.out.println(user);
@@ -105,13 +141,20 @@ public class ViewUser {
     private void create() throws Exception {
         String firstName = prompt("Имя: ");
         String lastName = prompt("Фамилия: ");
+        var dob = catchDOB();
+        if (dob == null) {
+            return;
+        }
         String phone = null;
         phone = catchTelephone(phone);
         if (phone == null) {
             return;
         }
-
-        userController.saveUser(new User(firstName, lastName, phone));
+        var sex = catchSex();
+        if (sex == null) {
+            return;
+        }
+        userController.saveUser(new User(firstName, lastName, phone, dob, sex));
     }
 
     private void showHelp() {
